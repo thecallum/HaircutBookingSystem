@@ -202,6 +202,7 @@
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DTOs\AppointmentDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -213,8 +214,21 @@
     <Compile Include="Migrations\202003161045326_AddBarbersModel.Designer.cs">
       <DependentUpon>202003161045326_AddBarbersModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003161205200_AddAppointmentModel.cs" />
+    <Compile Include="Migrations\202003161205200_AddAppointmentModel.Designer.cs">
+      <DependentUpon>202003161205200_AddAppointmentModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003161533191_AddBarberIDToAppointmentModel.cs" />
+    <Compile Include="Migrations\202003161533191_AddBarberIDToAppointmentModel.Designer.cs">
+      <DependentUpon>202003161533191_AddBarberIDToAppointmentModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003161537460_UpdateDayFieldInAppointmentModel.cs" />
+    <Compile Include="Migrations\202003161537460_UpdateDayFieldInAppointmentModel.Designer.cs">
+      <DependentUpon>202003161537460_UpdateDayFieldInAppointmentModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\Barber.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -310,6 +324,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003161045326_AddBarbersModel.resx">
       <DependentUpon>202003161045326_AddBarbersModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003161205200_AddAppointmentModel.resx">
+      <DependentUpon>202003161205200_AddAppointmentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003161533191_AddBarberIDToAppointmentModel.resx">
+      <DependentUpon>202003161533191_AddBarberIDToAppointmentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003161537460_UpdateDayFieldInAppointmentModel.resx">
+      <DependentUpon>202003161537460_UpdateDayFieldInAppointmentModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

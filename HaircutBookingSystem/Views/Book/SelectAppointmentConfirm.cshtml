@@ -5,11 +5,27 @@
 
 <h2>Confirm Appointment</h2>
 
-<p>@Model.Barber at @Model.Date.ToString("dddd dd MMM")</p>
-<p>Slot: @Model.Slot</p>
+<p>@Model.Barber.Name at @Model.AppointmentDTO.Date.ToString("dddd dd MMM")</p>
+<p>Slot: @Model.AppointmentDTO.Slot</p>
 
 
 @Html.ActionLink("Book Appointment", "confirm", "book",
-    new { date = Model.Parameters.Date, barber = Model.Parameters.Barber, slot = Model.Parameters.Slot },
+    new { date = Model.AppointmentDTO.Date.ToString("ddMMyy"), barber = Model.Barber.ID, slot = Model.AppointmentDTO.Slot },
     null
 )
+
+
+
+
+@using (Html.BeginForm("confirm", "book"))
+{
+    @Html.HiddenFor(x => Model.AppointmentDTO.BarberID)
+
+    @Html.HiddenFor(x => Model.AppointmentDTO.Date)
+
+
+    @Html.HiddenFor(x => Model.AppointmentDTO.Slot)
+
+
+    <button type="submit">Submit</button>
+}

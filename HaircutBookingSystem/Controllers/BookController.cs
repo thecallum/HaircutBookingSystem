@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using HaircutBookingSystem.Models;
 using HaircutBookingSystem.ViewModels;
 using HaircutBookingSystem.ViewModels.book;
+using HaircutBookingSystem.DTOs;
 
 namespace HaircutBookingSystem.Controllers
 {
@@ -41,13 +42,19 @@ namespace HaircutBookingSystem.Controllers
         }
 
         // GET: Book
+        [HttpGet]
         public ActionResult Index(int? slot, int? barber, string date = null)
         {
             if (date != null && slot != null && barber != null)
             {
-                var barberInstance = _context.Barbers.Single(x => x.ID == (int)barber);
+                var appointmentDTO = new AppointmentDTO
+                {
+                    BarberID = (byte)barber,
+                    Date = DateTime.ParseExact(date, "ddMMyy", System.Globalization.CultureInfo.InvariantCulture),
+                    Slot = (int)slot,
+                };
 
-                return View("SelectAppointmentConfirm", BuildConfirmViewModel(date, (int)slot, barberInstance));
+                return View("SelectAppointmentConfirm", BuildConfirmViewModel(appointmentDTO));
             }
 
             if (date != null)
@@ -56,32 +63,38 @@ namespace HaircutBookingSystem.Controllers
             return View("SelectAppointmentDate", new SelectDateViewModel());
         }
 
-
-        public ActionResult Confirm(int slot, int barber, string date)
+        [HttpPost]
+        public ActionResult Confirm(AppointmentDTO appointmentDTO)
         {
+            if (!ModelState.IsValid)
+                return View("SelectAppointmentConfirm", BuildConfirmViewModel(appointmentDTO));
+
+            var barber = _context.Barbers.SingleOrDefault(x => x.ID == appointmentDTO.BarberID);
+
+            if (barber == null)
+                return View("SelectAppointmentConfirm", BuildConfirmViewModel(appointmentDTO, "Barber Not Found"));
+
+            var appointment = new Appointment()
+            {
+                Barber = barber,
+                Date = appointmentDTO.Date,
+                Slot = appointmentDTO.Slot,
+            };
 
 
+            _context.Appointments.Add(appointment);
+            _context.SaveChanges();
 
             return View();
         }
 
-
-        private ConfirmViewModel BuildConfirmViewModel(string date, int slot, Barber barber)
+        private ConfirmViewModel BuildConfirmViewModel(AppointmentDTO appointmentDTO, string errorMessage = null)
         {
-            var parameters = new ConfirmParametersViewModel()
-            {
-                Date = date,
-                Slot = slot,
-                Barber = barber.ID
-            };
-
-
             return new ConfirmViewModel()
             {
-                Date = DateTime.ParseExact(date, "ddMMyy", System.Globalization.CultureInfo.InvariantCulture),
-                Slot = TimeSlots[slot],
-                Barber = barber.Name,
-                Parameters = parameters
+                AppointmentDTO = appointmentDTO,
+                Barber = _context.Barbers.SingleOrDefault(x => x.ID == appointmentDTO.BarberID),
+                ErrorMessage = errorMessage
             };
         }
 
