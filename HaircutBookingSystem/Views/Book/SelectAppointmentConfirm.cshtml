@@ -1,0 +1,15 @@
+﻿@model HaircutBookingSystem.ViewModels.book.ConfirmViewModel
+@{
+    ViewBag.Title = "SelectAppointmentConfirm";
+}
+
+<h2>Confirm Appointment</h2>
+
+<p>@Model.Barber at @Model.Date.ToString("dddd dd MMM")</p>
+<p>Slot: @Model.Slot</p>
+
+
+@Html.ActionLink("Book Appointment", "confirm", "book",
+    new { date = Model.Parameters.Date, barber = Model.Parameters.Barber, slot = Model.Parameters.Slot },
+    null
+)

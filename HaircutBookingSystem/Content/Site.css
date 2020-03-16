@@ -23,3 +23,46 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+
+/* Booking calendar */
+
+* {
+    box-sizing: border-box;
+}
+
+.calendar-day, .day-time {
+    display: block;
+    background: #eee;
+    text-align: center;
+    margin: 5px;
+    color: #000036;
+}
+
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.calendar-day, .shadow {
+    min-height: 123px;
+}
+
+.calendar-day, span.day-calendar {
+    font-size: 24px;
+}
+
+    .calendar-day .shadow {
+        padding: 10px 8px;
+    }
+
+.col-xs-12 {
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .col-sm-week {
+        width: 14.2857142857%;
+    }
+}
