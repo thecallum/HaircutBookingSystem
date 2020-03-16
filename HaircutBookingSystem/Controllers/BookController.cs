@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using HaircutBookingSystem.Models;
 using HaircutBookingSystem.ViewModels;
 using HaircutBookingSystem.ViewModels.book;
 
 namespace HaircutBookingSystem.Controllers
 {
+
     public class BookController : Controller
     {
+        private ApplicationDbContext _context;
+
         private string[] TimeSlots;
 
         public BookController()
         {
+            _context = new ApplicationDbContext();
+
             TimeSlots = new String[9]
             {
                 "09:00",
@@ -28,11 +34,21 @@ namespace HaircutBookingSystem.Controllers
             };
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+            base.Dispose(disposing);
+        }
+
         // GET: Book
         public ActionResult Index(int? slot, int? barber, string date = null)
         {
             if (date != null && slot != null && barber != null)
-                return View("SelectAppointmentConfirm", BuildConfirmViewModel(date, (int)slot));
+            {
+                var barberInstance = _context.Barbers.Single(x => x.ID == (int)barber);
+
+                return View("SelectAppointmentConfirm", BuildConfirmViewModel(date, (int)slot, barberInstance));
+            }
 
             if (date != null)
                 return View("SelectAppointmentTime", BuildSelectSlotViewModel(date));
@@ -50,13 +66,13 @@ namespace HaircutBookingSystem.Controllers
         }
 
 
-        private ConfirmViewModel BuildConfirmViewModel(string date, int slot)
+        private ConfirmViewModel BuildConfirmViewModel(string date, int slot, Barber barber)
         {
             var parameters = new ConfirmParametersViewModel()
             {
                 Date = date,
                 Slot = slot,
-                Barber = 0,
+                Barber = barber.ID
             };
 
 
@@ -64,7 +80,7 @@ namespace HaircutBookingSystem.Controllers
             {
                 Date = DateTime.ParseExact(date, "ddMMyy", System.Globalization.CultureInfo.InvariantCulture),
                 Slot = TimeSlots[slot],
-                Barber = "Michael",
+                Barber = barber.Name,
                 Parameters = parameters
             };
         }
@@ -85,10 +101,14 @@ namespace HaircutBookingSystem.Controllers
             var Barbers = new List<BarberViewModel>();
             var timeSlots = TimeSlots;
 
-            var newBarber = new BarberViewModel()
+            var barbers = _context.Barbers.ToList();
+
+            foreach (var barber in barbers)
             {
-                Barber = "Michael",
-                TimeSlots = new List<SlotViewModel>() {
+                var newBarber = new BarberViewModel()
+                {
+                    Barber = barber,
+                    TimeSlots = new List<SlotViewModel>() {
                     new SlotViewModel() { Time = timeSlots[0], Available = true },
                     new SlotViewModel() { Time = timeSlots[1], Available = true },
                     new SlotViewModel() { Time = timeSlots[2], Available = false },
@@ -99,9 +119,10 @@ namespace HaircutBookingSystem.Controllers
                     new SlotViewModel() { Time = timeSlots[7], Available = true },
                     new SlotViewModel() { Time = timeSlots[8], Available = true },
                 }
-            };
+                };
+                Barbers.Add(newBarber);
 
-            Barbers.Add(newBarber);
+            }
 
             return Barbers;
         }
