@@ -98,41 +98,47 @@ namespace HaircutBookingSystem.Controllers
             };
         }
 
-        private SelectSlotViewModel BuildSelectSlotViewModel(string Date)
+        private SelectSlotViewModel BuildSelectSlotViewModel(string date)
         {
             var viewModel = new SelectSlotViewModel()
             {
-                Date = Date,
-                Barbers = LoadBarbers()
+                Date = date,
+                Barbers = LoadBarbers(date)
             };
 
             return viewModel;
         }
 
-        private List<BarberViewModel> LoadBarbers()
+        private List<BarberViewModel> LoadBarbers(string date)
         {
             var Barbers = new List<BarberViewModel>();
-            var timeSlots = TimeSlots;
+            DateTime selectedDate = DateTime.ParseExact(date, "ddMMyy", System.Globalization.CultureInfo.InvariantCulture);
 
             var barbers = _context.Barbers.ToList();
 
             foreach (var barber in barbers)
             {
+                var appointments = _context.Appointments
+                    .Where(appointment => appointment.Barber.ID == barber.ID)
+                    .Where(appointment => appointment.Date == selectedDate)
+                   .GroupBy(appointment => appointment.Slot)
+                   .ToDictionary(appointment => appointment.Key);
+
                 var newBarber = new BarberViewModel()
                 {
                     Barber = barber,
-                    TimeSlots = new List<SlotViewModel>() {
-                    new SlotViewModel() { Time = timeSlots[0], Available = true },
-                    new SlotViewModel() { Time = timeSlots[1], Available = true },
-                    new SlotViewModel() { Time = timeSlots[2], Available = false },
-                    new SlotViewModel() { Time = timeSlots[3], Available = false },
-                    new SlotViewModel() { Time = timeSlots[4], Available = true },
-                    new SlotViewModel() { Time = timeSlots[5], Available = true },
-                    new SlotViewModel() { Time = timeSlots[6], Available = false },
-                    new SlotViewModel() { Time = timeSlots[7], Available = true },
-                    new SlotViewModel() { Time = timeSlots[8], Available = true },
-                }
+                    TimeSlots = new List<SlotViewModel>()
                 };
+
+
+                for (int i = 0; i <= TimeSlots.Count(); i++)
+                {
+                    newBarber.TimeSlots.Add(
+                        new SlotViewModel() { Time = TimeSlots[i], Available = !appointments.ContainsKey(i) }
+                    );
+                }
+
+
                 Barbers.Add(newBarber);
 
             }
