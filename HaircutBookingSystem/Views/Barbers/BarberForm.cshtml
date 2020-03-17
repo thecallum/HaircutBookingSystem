@@ -1,0 +1,29 @@
+﻿@model HaircutBookingSystem.ViewModels.admin.BarberViewModel
+
+@{
+    ViewBag.Title = "BarberForm";
+}
+
+<h2>Barber</h2>
+
+
+@using (Html.BeginForm("Save", "Barbers"))
+{
+    @Html.ValidationSummary()
+
+
+    <div class="form-group">
+        @Html.LabelFor(x => x.Barber.Name)
+        @Html.TextBoxFor(x => x.Barber.Name, new { @class = "form-control" })
+    </div>
+
+    @Html.HiddenFor(x => x.Barber.ID)
+
+
+    <button type="submit" class="btn btn-primary">Update</button>
+}
+
+@if (Model.Barber.ID != 0)
+{
+    @Html.ActionLink("Delete", "Delete", "Barbers", new { id = Model.Barber.ID }, new { @Class = "btn btn-danger mt-4" })
+}

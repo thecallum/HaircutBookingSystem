@@ -1,0 +1,30 @@
+﻿@model HaircutBookingSystem.ViewModels.admin.BarbersListViewModel
+
+@{
+    ViewBag.Title = "Barbers";
+}
+
+<h2>Barbers</h2>
+
+@Html.ActionLink("Add Barber", "Add", "Barbers", null, new { @class = "btn btn-secondary mb-4" })
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Manage</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var barber in Model.Barbers)
+        {
+            <tr>
+                <td>@barber.Name</td>
+                <td>
+                    @Html.ActionLink("Manage", "Edit", "Barbers", new { id = barber.ID }, null)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

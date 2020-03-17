@@ -198,11 +198,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BarbersController.cs" />
     <Compile Include="Controllers\AppointmentsController.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DTOs\AppointmentDTO.cs" />
+    <Compile Include="DTOs\BarberDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -226,6 +229,10 @@
     <Compile Include="Migrations\202003161537460_UpdateDayFieldInAppointmentModel.Designer.cs">
       <DependentUpon>202003161537460_UpdateDayFieldInAppointmentModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003171303104_UpdateBarberModelValidation.cs" />
+    <Compile Include="Migrations\202003171303104_UpdateBarberModelValidation.Designer.cs">
+      <DependentUpon>202003171303104_UpdateBarberModelValidation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Appointment.cs" />
@@ -234,6 +241,8 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\admin\BarbersListViewModel.cs" />
+    <Compile Include="ViewModels\admin\BarberViewModel.cs" />
     <Compile Include="ViewModels\book\BarberViewModel.cs" />
     <Compile Include="ViewModels\book\CalendarDayViewModel.cs" />
     <Compile Include="ViewModels\book\ConfirmViewModel.cs" />
@@ -306,6 +315,9 @@
     <Content Include="Views\Book\SelectAppointmentTime.cshtml" />
     <Content Include="Views\Book\SelectAppointmentConfirm.cshtml" />
     <Content Include="Views\Book\Confirm.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Barbers\Index.cshtml" />
+    <Content Include="Views\Barbers\BarberForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -333,6 +345,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003161537460_UpdateDayFieldInAppointmentModel.resx">
       <DependentUpon>202003161537460_UpdateDayFieldInAppointmentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171303104_UpdateBarberModelValidation.resx">
+      <DependentUpon>202003171303104_UpdateBarberModelValidation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
