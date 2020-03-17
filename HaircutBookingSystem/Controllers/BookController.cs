@@ -41,7 +41,6 @@ namespace HaircutBookingSystem.Controllers
             base.Dispose(disposing);
         }
 
-        // GET: Book
         [HttpGet]
         public ActionResult Index(int? slot, int? barber, string date = null)
         {
@@ -60,7 +59,24 @@ namespace HaircutBookingSystem.Controllers
             if (date != null)
                 return View("SelectAppointmentTime", BuildSelectSlotViewModel(date));
 
-            return View("SelectAppointmentDate", new SelectDateViewModel());
+            return View("SelectAppointmentDate", BuildSelectDateViewModel());
+        }
+
+        private SelectDateViewModel BuildSelectDateViewModel()
+        {
+            DateTime startDate = SelectDateViewModel.GetCalendarStartDate();
+            DateTime endDate = SelectDateViewModel.GetCalendarEndDate();
+
+            int numberOfBarbers = _context.Barbers.Count();
+            int numberOfAppointmentsPerDay = numberOfBarbers * TimeSlots.Count();
+
+            var appointmentsGroupedByCount = _context.Appointments
+                .Where(appointment => appointment.Date >= startDate)
+                .Where(appointment => appointment.Date <= endDate)
+                .GroupBy(appointment => appointment.Date)
+                .ToDictionary(appointment => appointment.Key, appointment => appointment.Count());
+
+            return new SelectDateViewModel(appointmentsGroupedByCount, startDate, numberOfAppointmentsPerDay);
         }
 
         [HttpPost]
@@ -130,17 +146,14 @@ namespace HaircutBookingSystem.Controllers
                     TimeSlots = new List<SlotViewModel>()
                 };
 
-
-                for (int i = 0; i <= TimeSlots.Count(); i++)
+                for (int i = 0; i < TimeSlots.Count(); i++)
                 {
                     newBarber.TimeSlots.Add(
                         new SlotViewModel() { Time = TimeSlots[i], Available = !appointments.ContainsKey(i) }
                     );
                 }
 
-
                 Barbers.Add(newBarber);
-
             }
 
             return Barbers;

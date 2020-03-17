@@ -10,5 +10,6 @@ namespace HaircutBookingSystem.ViewModels.book
         public DateTime Date { get; set; }
         public bool EnableLink { get; set; } = false;
         public int Index { get; set; }
+        public int Availability { get; set; }
     }
 }

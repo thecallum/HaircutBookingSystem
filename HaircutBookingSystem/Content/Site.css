@@ -45,9 +45,6 @@ textarea {
     margin: 0 !important;
 }
 
-.calendar-day, .shadow {
-    min-height: 123px;
-}
 
 .calendar-day, span.day-calendar {
     font-size: 24px;
@@ -57,12 +54,68 @@ textarea {
         padding: 10px 8px;
     }
 
+    .calendar-day br {
+        display: none;
+    }
+
 .col-xs-12 {
     width: 100%;
+}
+
+.calendar-day-10 {
+    background: hsl(100, 40%, 50%);
+}
+
+.calendar-day-9 {
+    background: hsl(90, 40%, 50%);
+}
+
+.calendar-day-8 {
+    background: hsl(80, 40%, 50%);
+}
+
+.calendar-day-7 {
+    background: hsl(70, 40%, 50%);
+}
+
+.calendar-day-6 {
+    background: hsl(60, 40%, 50%);
+}
+
+.calendar-day-5 {
+    background: hsl(50, 40%, 50%);
+}
+
+.calendar-day-4 {
+    background: hsl(40, 40%, 50%);
+}
+
+.calendar-day-3 {
+    background: hsl(30, 40%, 50%);
+}
+
+.calendar-day-2 {
+    background: hsl(20, 40%, 50%);
+}
+
+.calendar-day-1 {
+    background: hsl(10, 40%, 50%);
+}
+
+.calendar-day-0 {
+    background: hsl(0, 40%, 50%);
 }
 
 @media (min-width: 768px) {
     .col-sm-week {
         width: 14.2857142857%;
+    }
+
+    .calendar-day br {
+        display: block;
+    }
+
+    .calendar-day, .shadow {
+        min-height: 123px;
     }
 }

@@ -8,51 +8,71 @@ namespace HaircutBookingSystem.ViewModels.book
 {
     public class SelectDateViewModel
     {
-        private readonly int NUMBER_OF_CALENDAR_DAYS = 28;
-        private readonly int SUNDAY = 7;
+        public static readonly int NUMBER_OF_CALENDAR_DAYS = 28;
+
+        private int NumberOfAppointmentsPerDay;
+        private Dictionary<DateTime, int> AppointmentsGroupedByCount;
 
         public CalendarDayViewModel[] Dates { get; set; }
 
-        public SelectDateViewModel()
+        public SelectDateViewModel(Dictionary<DateTime, int> appointmentsGroupedByCount, DateTime startDate, int numberOfAppointmentsPerDay)
         {
-            Dates = BuildCalendarDayViewModel();
-        }
+            NumberOfAppointmentsPerDay = numberOfAppointmentsPerDay;
+            AppointmentsGroupedByCount = appointmentsGroupedByCount;
 
+            Dates = new CalendarDayViewModel[NUMBER_OF_CALENDAR_DAYS];
 
-        private CalendarDayViewModel[] BuildCalendarDayViewModel()
-        {
-            DateTime calendarStartDate = GetCalendarStartDate();
-            CalendarDayViewModel[] dates = new CalendarDayViewModel[NUMBER_OF_CALENDAR_DAYS];
-
-            for (int i = 0; i < 28; i++)
+            for (int i = 0; i < NUMBER_OF_CALENDAR_DAYS; i++)
             {
-                CalendarDayViewModel calendarDay = new CalendarDayViewModel()
-                {
-                    Date = calendarStartDate.AddDays(i),
-                    Index = i
-                };
-
-                if ((int)calendarDay.Date.DayOfWeek != SUNDAY)
-                    calendarDay.EnableLink = true;
-
-                dates[i] = calendarDay;
+                DateTime date = startDate.AddDays(i);
+                Dates[i] = BuildCalendarDayViewModel(date);
             }
-
-            return dates;
         }
 
-        private DateTime GetCalendarStartDate()
+        private CalendarDayViewModel BuildCalendarDayViewModel(DateTime date)
+        {
+            CalendarDayViewModel calendarDay = new CalendarDayViewModel()
+            {
+                Date = date,
+                Availability = GetAvailableAppointmentsOutOfTen(date),
+                EnableLink = false
+            };
+
+            if (date.DayOfWeek != DayOfWeek.Sunday)
+                calendarDay.EnableLink = true;
+
+            return calendarDay;
+        }
+
+        private int GetAvailableAppointmentsOutOfTen(DateTime date)
+        {
+            int defaultAvailability = 10;
+
+            if (!AppointmentsGroupedByCount.ContainsKey(date))
+                return defaultAvailability;
+
+            double availabilityFraction = (double)AppointmentsGroupedByCount[date] / (double)NumberOfAppointmentsPerDay;
+            int availabilityOutOfTen = defaultAvailability - (int)Math.Floor(availabilityFraction * 10);
+
+            return availabilityOutOfTen;
+        }
+
+        public static DateTime GetCalendarStartDate()
         {
             DateTime today = DateTime.Today;
 
-            int todayWeekNum = (int)today.DayOfWeek;
-
-            if (todayWeekNum == SUNDAY)
+            if (today.DayOfWeek == DayOfWeek.Sunday)
                 return today;
 
+            int todayWeekNum = (int)today.DayOfWeek;
             int numberOfDaysAfterSunday = todayWeekNum;
 
             return today.AddDays(-numberOfDaysAfterSunday);
+        }
+
+        public static DateTime GetCalendarEndDate()
+        {
+            return GetCalendarStartDate().AddDays(NUMBER_OF_CALENDAR_DAYS - 1);
         }
     }
 }
