@@ -1,0 +1,34 @@
+﻿@model  HaircutBookingSystem.ViewModels.book.SelectSlotViewModel
+@{
+    ViewBag.Title = "SelectAppointmentTime";
+}
+
+<h2>Select Appointment Time</h2>
+
+
+
+@foreach (var barber in Model.Barbers)
+{
+    <h3>@barber.Barber.Name: @barber.Barber.ID</h3>
+
+    <ul>
+        @foreach (var appointment in barber.TimeSlots.Select((value, i) => new { i, value }))
+        {
+            <li>
+                @if (appointment.value.Available)
+                {
+                    @Html.ActionLink(
+                    String.Format("{0}: {1}", appointment.value.Time, appointment.value.Available ? "Available" : "Taken"),
+                    "index", "book",
+                    new { date = Model.Date, barber = barber.Barber.ID, slot = appointment.i }, null)
+                }
+                else
+                {
+                    <span>
+                        @appointment.value.Time:  @(appointment.value.Available ? "Available" : "Taken")
+                    </span>
+                }
+            </li>
+        }
+    </ul>
+}

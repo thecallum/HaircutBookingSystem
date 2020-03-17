@@ -1,0 +1,35 @@
+﻿@model HaircutBookingSystem.ViewModels.book.SelectDateViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Choose a day</h2>
+
+<div class="container">
+    <div id="truncated_calendar">
+        <div class="row">
+
+            @foreach (var date in Model.Dates)
+            {
+                <div class="col-xs-12 col-sm-week nopadding">
+
+                    @Html.Raw(date.EnableLink ?
+                        "<a class='calendar-day calendar-day-" + @date.Availability + "' href='/book?date=" + date.Date.ToString("ddMMyy") + "'>" :
+                        "<div class='calendar-day'>"
+                   )
+
+                    <div class="shadow">
+                        <span class="day-calendar">
+                            <span class="day-of-week">@date.Date.ToString("ddd")</span>
+                            <br> @date.Date.ToString("dd")
+                            <br> @date.Date.ToString("MMM")
+                        </span>
+                    </div>
+
+                    @Html.Raw(date.EnableLink ? "</a>" : "</div>")
+
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -80,6 +80,8 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -200,14 +202,44 @@
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="DTOs\AppointmentDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003161043100_InitialMigration.cs" />
+    <Compile Include="Migrations\202003161043100_InitialMigration.Designer.cs">
+      <DependentUpon>202003161043100_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003161045326_AddBarbersModel.cs" />
+    <Compile Include="Migrations\202003161045326_AddBarbersModel.Designer.cs">
+      <DependentUpon>202003161045326_AddBarbersModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003161205200_AddAppointmentModel.cs" />
+    <Compile Include="Migrations\202003161205200_AddAppointmentModel.Designer.cs">
+      <DependentUpon>202003161205200_AddAppointmentModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003161533191_AddBarberIDToAppointmentModel.cs" />
+    <Compile Include="Migrations\202003161533191_AddBarberIDToAppointmentModel.Designer.cs">
+      <DependentUpon>202003161533191_AddBarberIDToAppointmentModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003161537460_UpdateDayFieldInAppointmentModel.cs" />
+    <Compile Include="Migrations\202003161537460_UpdateDayFieldInAppointmentModel.Designer.cs">
+      <DependentUpon>202003161537460_UpdateDayFieldInAppointmentModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Appointment.cs" />
+    <Compile Include="Models\Barber.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\book\BarberViewModel.cs" />
+    <Compile Include="ViewModels\book\CalendarDayViewModel.cs" />
+    <Compile Include="ViewModels\book\ConfirmViewModel.cs" />
+    <Compile Include="ViewModels\book\SelectDateViewModel.cs" />
+    <Compile Include="ViewModels\book\SelectSlotViewModel.cs" />
+    <Compile Include="ViewModels\book\SlotViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-solar.css" />
@@ -269,8 +301,11 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Appointments\Index.cshtml" />
-    <Content Include="Views\Book\Index.cshtml" />
+    <Content Include="Views\Book\SelectAppointmentDate.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Book\SelectAppointmentTime.cshtml" />
+    <Content Include="Views\Book\SelectAppointmentConfirm.cshtml" />
+    <Content Include="Views\Book\Confirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -282,6 +317,23 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202003161043100_InitialMigration.resx">
+      <DependentUpon>202003161043100_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003161045326_AddBarbersModel.resx">
+      <DependentUpon>202003161045326_AddBarbersModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003161205200_AddAppointmentModel.resx">
+      <DependentUpon>202003161205200_AddAppointmentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003161533191_AddBarberIDToAppointmentModel.resx">
+      <DependentUpon>202003161533191_AddBarberIDToAppointmentModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003161537460_UpdateDayFieldInAppointmentModel.resx">
+      <DependentUpon>202003161537460_UpdateDayFieldInAppointmentModel.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
