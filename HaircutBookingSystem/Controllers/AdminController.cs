@@ -11,6 +11,7 @@ using System.Data.Entity;
 
 namespace HaircutBookingSystem.Controllers
 {
+    [Authorize(Roles = RoleName.Admin)]
     public class AdminController : Controller
     {
         public ActionResult Index()

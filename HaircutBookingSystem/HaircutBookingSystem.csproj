@@ -233,12 +233,25 @@
     <Compile Include="Migrations\202003171303104_UpdateBarberModelValidation.Designer.cs">
       <DependentUpon>202003171303104_UpdateBarberModelValidation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003171815527_PopulateRoles.cs" />
+    <Compile Include="Migrations\202003171815527_PopulateRoles.Designer.cs">
+      <DependentUpon>202003171815527_PopulateRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003182005262_role.cs" />
+    <Compile Include="Migrations\202003182005262_role.Designer.cs">
+      <DependentUpon>202003182005262_role.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003211110462_CreateAdminRole.cs" />
+    <Compile Include="Migrations\202003211110462_CreateAdminRole.Designer.cs">
+      <DependentUpon>202003211110462_CreateAdminRole.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Appointment.cs" />
     <Compile Include="Models\Barber.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\RoleName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\admin\BarbersListViewModel.cs" />
@@ -348,6 +361,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003171303104_UpdateBarberModelValidation.resx">
       <DependentUpon>202003171303104_UpdateBarberModelValidation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003171815527_PopulateRoles.resx">
+      <DependentUpon>202003171815527_PopulateRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003182005262_role.resx">
+      <DependentUpon>202003182005262_role.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003211110462_CreateAdminRole.resx">
+      <DependentUpon>202003211110462_CreateAdminRole.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
